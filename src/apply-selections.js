@@ -6,11 +6,12 @@ import paint from "./paint.js";
 import resize from "./resize.js";
 import "./style.scss";
 
-export default window.define([], function() {
+export default window.define(['jquery','qlik'], function($, qlik) {
+
   return {
     initialProperties: initialProperties,
     template: template,
-    definition: definition,
+    definition: definition(qlik),
     controller: controller,
     paint: paint,
     resize: resize

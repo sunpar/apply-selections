@@ -1,7 +1,8 @@
 {
   "name": "Apply Selections",
-  "description": "",
+  "description": "Apply selections and state on app open and create a button for applying state",
   "type": "visualization",
   "version": "0.1.0",
-  "author": ""
+  "author": "Sundeep Paruchuri",
+  "icon": "filterpane"
 }
