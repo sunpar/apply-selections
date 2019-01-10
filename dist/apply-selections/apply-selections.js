@@ -105,19 +105,24 @@ var _resize = __webpack_require__(7);
 
 var _resize2 = _interopRequireDefault(_resize);
 
+var _mounted = __webpack_require__(13);
+
+var _mounted2 = _interopRequireDefault(_mounted);
+
 __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = window.define(['jquery', 'qlik'], function ($, qlik) {
-
+exports.default = window.define(["jquery", "qlik"], function ($, qlik) {
+  var controller = (0, _controller2.default)(qlik);
   return {
     initialProperties: _initialProperties2.default,
     template: _template2.default,
     definition: (0, _definition2.default)(qlik),
-    controller: _controller2.default,
+    controller: controller,
     paint: _paint2.default,
-    resize: _resize2.default
+    resize: _resize2.default,
+    mounted: _mounted2.default
   };
 });
 
@@ -137,7 +142,7 @@ exports.default = {};
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"button\"><button class=\"apply\">On Click</button></div>\n<div class=\"button\"><button class=\"reset\">Reset</button></div>\n";
+module.exports = "<div class=\"button\"><button class=\"apply\">On Click</button></div>\n<div class=\"button\"><button class=\"reset\">On Open</button></div>\n";
 
 /***/ }),
 /* 4 */
@@ -166,456 +171,6 @@ var actionTypeDropdown = [{
   label: "Set Variable"
 }];
 
-var onClick = {
-  label: "On Click Actions",
-  component: "expandable-items",
-  items: {
-    action1: {
-      type: "items",
-      label: "Action 1",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onclick.action1.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionvalue: {
-          ref: "onclick.action1.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return data.onclick.action1.type !== "none";
-          }
-        }
-      }
-    },
-    action2: {
-      type: "items",
-      label: "Action 2",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onclick.action2.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionvalue: {
-          ref: "onclick.action2.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return data.onclick.action2.type !== "none";
-          }
-        }
-      }
-    },
-    action3: {
-      type: "items",
-      label: "Action 3",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onclick.action3.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionvalue: {
-          ref: "onclick.action3.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return data.onclick.action3.type !== "none";
-          }
-        }
-      }
-    },
-    action4: {
-      type: "items",
-      label: "Action 4",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onclick.action4.type",
-          defaultValue: "none",
-          options: actionTypeDropdown,
-          show: function show(data) {
-            return data.onclick.action4.type !== "none";
-          }
-        },
-        actionvalue: {
-          ref: "onclick.action4.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional"
-        }
-      }
-    },
-    action5: {
-      type: "items",
-      label: "Action 5",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onclick.action5.type",
-          defaultValue: "none",
-          options: actionTypeDropdown,
-          show: function show(data) {
-            return data.onclick.action5.type !== "none";
-          }
-        },
-        actionvalue: {
-          ref: "onclick.action5.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional"
-        }
-      }
-    },
-    action6: {
-      type: "items",
-      label: "Action 6",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onclick.action6.type",
-          defaultValue: "none",
-          options: actionTypeDropdown,
-          show: function show(data) {
-            return data.onclick.action6.type !== "none";
-          }
-        },
-        actionvalue: {
-          ref: "onclick.action6.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional"
-        }
-      }
-    },
-    action7: {
-      type: "items",
-      label: "Action 7",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onclick.action7.type",
-          defaultValue: "none",
-          options: actionTypeDropdown,
-          show: function show(data) {
-            return data.onclick.action7.type !== "none";
-          }
-        },
-        actionvalue: {
-          ref: "onclick.action7.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional"
-        }
-      }
-    },
-    action8: {
-      type: "items",
-      label: "Action 8",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onclick.action8.type",
-          defaultValue: "none",
-          options: actionTypeDropdown,
-          show: function show(data) {
-            return data.onclick.action8.type !== "none";
-          }
-        },
-        actionvalue: {
-          ref: "onclick.action8.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional"
-        }
-      }
-    },
-    action9: {
-      type: "items",
-      label: "Action 9",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onclick.action9.type",
-          defaultValue: "none",
-          options: actionTypeDropdown,
-          show: function show(data) {
-            return data.onclick.action9.type !== "none";
-          }
-        },
-        actionvalue: {
-          ref: "onclick.action9.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional"
-        }
-      }
-    }
-  }
-};
-
-var onOpen = {
-  label: "On Open Actions",
-  component: "expandable-items",
-  items: {
-    action1: {
-      type: "items",
-      label: "Action 1",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onopen.action1.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionName: {
-          ref: "onopen.action1.name",
-          label: "Field or Variable Name",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return ["none", "bookmark"].indexOf(data.onopen.action1.type) === -1;
-          }
-        },
-        actionvalue: {
-          ref: "onopen.action1.value",
-          label: "Selection or Variable Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return ["none", "bookmark", "clear"].indexOf(data.onopen.action1.type) === -1;
-          }
-        },
-        bookmarks: {
-          type: "string",
-          component: "dropdown",
-          label: "Bookmark Name",
-          ref: "onopen.action1.bookmarkName",
-          defaultValue: "",
-          options: function options() {
-            return actionTypeDropdown;
-          },
-          show: function show(data) {
-            return data.onopen.action1.type === "bookmark";
-          }
-        }
-      }
-    },
-    action2: {
-      type: "items",
-      label: "Action 2",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onopen.action2.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionvalue: {
-          ref: "onopen.action2.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return data.onopen.action2.type !== "none";
-          }
-        }
-      }
-    },
-    action3: {
-      type: "items",
-      label: "Action 3",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onopen.action3.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionvalue: {
-          ref: "onopen.action3.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return data.onopen.action3.type !== "none";
-          }
-        }
-      }
-    },
-    action4: {
-      type: "items",
-      label: "Action 4",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onopen.action4.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionvalue: {
-          ref: "onopen.action4.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return data.onopen.action4.type !== "none";
-          }
-        }
-      }
-    },
-    action5: {
-      type: "items",
-      label: "Action 5",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onopen.action5.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionvalue: {
-          ref: "onopen.action5.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return data.onopen.action5.type !== "none";
-          }
-        }
-      }
-    },
-    action6: {
-      type: "items",
-      label: "Action 6",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onopen.action6.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionvalue: {
-          ref: "onopen.action6.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return data.onopen.action6.type !== "none";
-          }
-        }
-      }
-    },
-    action7: {
-      type: "items",
-      label: "Action 7",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onopen.action7.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionvalue: {
-          ref: "onopen.action7.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return data.onopen.action7.type !== "none";
-          }
-        }
-      }
-    },
-    action8: {
-      type: "items",
-      label: "Action 8",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onopen.action8.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionvalue: {
-          ref: "onopen.action8.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return data.onopen.action8.type !== "none";
-          }
-        }
-      }
-    },
-    action9: {
-      type: "items",
-      label: "Action 9",
-      items: {
-        actiontype: {
-          type: "string",
-          component: "dropdown",
-          label: "Action Type",
-          ref: "onopen.action9.type",
-          defaultValue: "none",
-          options: actionTypeDropdown
-        },
-        actionvalue: {
-          ref: "onopen.action9.value",
-          label: "Action Value",
-          type: "string",
-          expression: "optional",
-          show: function show(data) {
-            return data.onopen.action9.type !== "none";
-          }
-        }
-      }
-    }
-  }
-};
-
 // export default {
 //   type: "items",
 //   component: "accordion",
@@ -636,7 +191,6 @@ exports.default = function (qlik) {
       };
     });
   });
-  console.log(bookmarkList);
 
   var onClick = {
     label: "On Click Actions",
@@ -893,7 +447,6 @@ exports.default = function (qlik) {
             ref: "onopen.action1.bookmarkName",
             defaultValue: "",
             options: function options() {
-              console.log(bookmarkList);
               return bookmarkList;
             },
             show: function show(data) {
@@ -1108,9 +661,30 @@ exports.default = function (qlik) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.default = ['$scope', '$element', function ($scope, $element) {}];
+
+exports.default = function (qlik) {
+  return ["$scope", "$element", function ($scope, $element) {
+    var app = qlik.currApp();
+    var layout = $scope.layout;
+    //get all the "on open" actions
+    var onopen = Object.values(layout.onopen).filter(function (action) {
+      return action.type !== "none";
+    });
+    //get all the "on click" actions
+    var onclick = Object.values(layout.onclick).filter(function (action) {
+      return action.type !== "none";
+    });
+
+    //if there are on open actions, perform said actions
+    onopen.forEach(function (action) {
+      if (action.type === "bookmark") {
+        app.bookmark.apply(action.bookmarkName);
+      }
+    });
+  }];
+};
 
 /***/ }),
 /* 6 */
@@ -1123,9 +697,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function ($element, layout) {
-  console.log(layout);
-};
+exports.default = function ($element, layout) {};
 
 /***/ }),
 /* 7 */
@@ -1736,6 +1308,19 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function ($element) {};
 
 /***/ })
 /******/ ]);
