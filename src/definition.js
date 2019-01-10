@@ -915,5 +915,6 @@ export default qlik => {
       onOpen: onOpen
     }
   };
+  
   return ret;
 };
