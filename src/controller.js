@@ -21,20 +21,23 @@ export default qlik => {
           case "variable":
             app.variable.setStringValue(action.drop, action.value);
             break;
+          case "clearall":
+            app.clearAll();
+            break;
           default:
             break;
         }
       };
 
       //get all the "on open" actions
-      const OpenActions = Object.values(layout.onopen).filter(
-        action => action.type !== "none"
+      const OpenActions = Object.values(layout.actions).filter(
+        action => action.type !== "none" && ['open','both'].indexOf(action.event) >= 0
       );
       //get all the "on click" actions
-      const ClickActions = Object.values(layout.onclick).filter(
-        action => action.type !== "none"
+      const ClickActions = Object.values(layout.actions).filter(
+        action => action.type !== "none" && ['click','both'].indexOf(action.event) >= 0
       );
-
+      
 			//function to do the open actions on button click
       $scope.doOpenActions = () => {
         OpenActions.forEach(action => {

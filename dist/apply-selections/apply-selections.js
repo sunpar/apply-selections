@@ -105,11 +105,11 @@ var _resize = __webpack_require__(7);
 
 var _resize2 = _interopRequireDefault(_resize);
 
-var _mounted = __webpack_require__(13);
+var _mounted = __webpack_require__(8);
 
 var _mounted2 = _interopRequireDefault(_mounted);
 
-__webpack_require__(8);
+__webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -142,7 +142,7 @@ exports.default = {};
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"button\"><button class=\"apply\" ng-click=\"doClickActions()\">On Click</button></div>\n<div class=\"button\"><button class=\"reset\">On Open</button></div>\n";
+module.exports = "<div class=\"button\"><button class=\"apply\" ng-click=\"doClickActions()\">Apply</button></div>\n";
 
 /***/ }),
 /* 4 */
@@ -154,6 +154,18 @@ module.exports = "<div class=\"button\"><button class=\"apply\" ng-click=\"doCli
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+// options for action event type drop down
+var actionEventDropdown = [{
+  value: "open",
+  label: "On Open"
+}, {
+  value: "click",
+  label: "On Click"
+}, {
+  value: "both",
+  label: "Both"
+}];
+
 // options for action type drop down
 var actionTypeDropdown = [{
   value: "none",
@@ -171,6 +183,12 @@ var actionTypeDropdown = [{
   value: "variable",
   label: "Set Variable"
 }];
+
+// options for the first action 
+var actionTypeDropdownClear = actionTypeDropdown.concat({
+  value: "clearall",
+  label: "Clear All"
+});
 
 exports.default = function (qlik) {
   var app = qlik.currApp();
@@ -197,8 +215,8 @@ exports.default = function (qlik) {
     });
   });
 
-  var onClick = {
-    label: "On Click Actions",
+  var actions = {
+    label: "Actions",
     component: "expandable-items",
     items: {
       action1: {
@@ -209,40 +227,51 @@ exports.default = function (qlik) {
             type: "string",
             component: "dropdown",
             label: "Action Type",
-            ref: "onclick.action1.type",
+            ref: "actions.action1.type",
             defaultValue: "none",
-            options: actionTypeDropdown
+            options: actionTypeDropdownClear
+          },
+          actionevent: {
+            type: "string",
+            component: "dropdown",
+            label: "Action Execution",
+            ref: "actions.action1.event",
+            defaultValue: "open",
+            options: actionEventDropdown,
+            show: function show(data) {
+              return ["none"].indexOf(data.actions.action1.event) === -1;
+            }
           },
           actionName: {
-            ref: "onclick.action1.name",
+            ref: "actions.action1.name",
             label: "Field Name",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onclick.action1.type) !== -1;
+              return ["clear", "selection"].indexOf(data.actions.action1.type) !== -1;
             }
           },
           actionDrop: {
             type: "string",
             component: "dropdown",
             label: function label(data) {
-              return data.onclick.action1.type === "bookmark" ? "Bookmark Name" : "Variable Name";
+              return data.actions.action1.type === "bookmark" ? "Bookmark Name" : "Variable Name";
             },
-            ref: "onclick.action1.drop",
+            ref: "actions.action1.drop",
             options: function options(data) {
-              return data.onclick.action1.type === "bookmark" ? bookmarkList : variableList;
+              return data.actions.action1.type === "bookmark" ? bookmarkList : variableList;
             },
             show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onclick.action1.type) !== -1;
+              return ["bookmark", "variable"].indexOf(data.actions.action1.type) !== -1;
             }
           },
           actionValue: {
-            ref: "onclick.action1.value",
+            ref: "actions.action1.value",
             label: "Selection or Variable Value",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onclick.action1.type) !== -1;
+              return ["selection", "variable"].indexOf(data.actions.action1.type) !== -1;
             }
           }
         }
@@ -255,40 +284,51 @@ exports.default = function (qlik) {
             type: "string",
             component: "dropdown",
             label: "Action Type",
-            ref: "onclick.action2.type",
+            ref: "actions.action2.type",
             defaultValue: "none",
             options: actionTypeDropdown
           },
+          actionevent: {
+            type: "string",
+            component: "dropdown",
+            label: "Action Execution",
+            ref: "actions.action2.event",
+            defaultValue: "open",
+            options: actionEventDropdown,
+            show: function show(data) {
+              return ["none"].indexOf(data.actions.action2.event) === -1;
+            }
+          },
           actionName: {
-            ref: "onclick.action2.name",
+            ref: "actions.action2.name",
             label: "Field Name",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onclick.action2.type) !== -1;
+              return ["clear", "selection"].indexOf(data.actions.action2.type) !== -1;
             }
           },
           actionDrop: {
             type: "string",
             component: "dropdown",
             label: function label(data) {
-              return data.onclick.action2.type === "bookmark" ? "Bookmark Name" : "Variable Name";
+              return data.actions.action2.type === "bookmark" ? "Bookmark Name" : "Variable Name";
             },
-            ref: "onclick.action2.drop",
+            ref: "actions.action2.drop",
             options: function options(data) {
-              return data.onclick.action2.type === "bookmark" ? bookmarkList : variableList;
+              return data.actions.action2.type === "bookmark" ? bookmarkList : variableList;
             },
             show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onclick.action2.type) !== -1;
+              return ["bookmark", "variable"].indexOf(data.actions.action2.type) !== -1;
             }
           },
           actionValue: {
-            ref: "onclick.action2.value",
+            ref: "actions.action2.value",
             label: "Selection or Variable Value",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onclick.action2.type) !== -1;
+              return ["selection", "variable"].indexOf(data.actions.action2.type) !== -1;
             }
           }
         }
@@ -301,40 +341,51 @@ exports.default = function (qlik) {
             type: "string",
             component: "dropdown",
             label: "Action Type",
-            ref: "onclick.action3.type",
+            ref: "actions.action3.type",
             defaultValue: "none",
             options: actionTypeDropdown
           },
+          actionevent: {
+            type: "string",
+            component: "dropdown",
+            label: "Action Execution",
+            ref: "actions.action3.event",
+            defaultValue: "open",
+            options: actionEventDropdown,
+            show: function show(data) {
+              return ["none"].indexOf(data.actions.action3.event) === -1;
+            }
+          },
           actionName: {
-            ref: "onclick.action3.name",
+            ref: "actions.action3.name",
             label: "Field Name",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onclick.action3.type) !== -1;
+              return ["clear", "selection"].indexOf(data.actions.action3.type) !== -1;
             }
           },
           actionDrop: {
             type: "string",
             component: "dropdown",
             label: function label(data) {
-              return data.onclick.action3.type === "bookmark" ? "Bookmark Name" : "Variable Name";
+              return data.actions.action3.type === "bookmark" ? "Bookmark Name" : "Variable Name";
             },
-            ref: "onclick.action3.drop",
+            ref: "actions.action3.drop",
             options: function options(data) {
-              return data.onclick.action3.type === "bookmark" ? bookmarkList : variableList;
+              return data.actions.action3.type === "bookmark" ? bookmarkList : variableList;
             },
             show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onclick.action3.type) !== -1;
+              return ["bookmark", "variable"].indexOf(data.actions.action3.type) !== -1;
             }
           },
           actionValue: {
-            ref: "onclick.action3.value",
+            ref: "actions.action3.value",
             label: "Selection or Variable Value",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onclick.action3.type) !== -1;
+              return ["selection", "variable"].indexOf(data.actions.action3.type) !== -1;
             }
           }
         }
@@ -347,40 +398,51 @@ exports.default = function (qlik) {
             type: "string",
             component: "dropdown",
             label: "Action Type",
-            ref: "onclick.action4.type",
+            ref: "actions.action4.type",
             defaultValue: "none",
             options: actionTypeDropdown
           },
+          actionevent: {
+            type: "string",
+            component: "dropdown",
+            label: "Action Execution",
+            ref: "actions.action1=4.event",
+            defaultValue: "open",
+            options: actionEventDropdown,
+            show: function show(data) {
+              return ["none"].indexOf(data.actions.action4.event) === -1;
+            }
+          },
           actionName: {
-            ref: "onclick.action4.name",
+            ref: "actions.action4.name",
             label: "Field Name",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onclick.action4.type) !== -1;
+              return ["clear", "selection"].indexOf(data.actions.action4.type) !== -1;
             }
           },
           actionDrop: {
             type: "string",
             component: "dropdown",
             label: function label(data) {
-              return data.onclick.action4.type === "bookmark" ? "Bookmark Name" : "Variable Name";
+              return data.actions.action4.type === "bookmark" ? "Bookmark Name" : "Variable Name";
             },
-            ref: "onclick.action4.drop",
+            ref: "actions.action4.drop",
             options: function options(data) {
-              return data.onclick.action4.type === "bookmark" ? bookmarkList : variableList;
+              return data.actions.action4.type === "bookmark" ? bookmarkList : variableList;
             },
             show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onclick.action4.type) !== -1;
+              return ["bookmark", "variable"].indexOf(data.actions.action4.type) !== -1;
             }
           },
           actionValue: {
-            ref: "onclick.action4.value",
+            ref: "actions.action4.value",
             label: "Selection or Variable Value",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onclick.action4.type) !== -1;
+              return ["selection", "variable"].indexOf(data.actions.action4.type) !== -1;
             }
           }
         }
@@ -393,40 +455,51 @@ exports.default = function (qlik) {
             type: "string",
             component: "dropdown",
             label: "Action Type",
-            ref: "onclick.action5.type",
+            ref: "actions.action5.type",
             defaultValue: "none",
             options: actionTypeDropdown
           },
+          actionevent: {
+            type: "string",
+            component: "dropdown",
+            label: "Action Execution",
+            ref: "actions.action5.event",
+            defaultValue: "open",
+            options: actionEventDropdown,
+            show: function show(data) {
+              return ["none"].indexOf(data.actions.action5.event) === -1;
+            }
+          },
           actionName: {
-            ref: "onclick.action5.name",
+            ref: "actions.action5.name",
             label: "Field Name",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onclick.action5.type) !== -1;
+              return ["clear", "selection"].indexOf(data.actions.action5.type) !== -1;
             }
           },
           actionDrop: {
             type: "string",
             component: "dropdown",
             label: function label(data) {
-              return data.onclick.action5.type === "bookmark" ? "Bookmark Name" : "Variable Name";
+              return data.actions.action5.type === "bookmark" ? "Bookmark Name" : "Variable Name";
             },
-            ref: "onclick.action5.drop",
+            ref: "actions.action5.drop",
             options: function options(data) {
-              return data.onclick.action5.type === "bookmark" ? bookmarkList : variableList;
+              return data.actions.action5.type === "bookmark" ? bookmarkList : variableList;
             },
             show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onclick.action5.type) !== -1;
+              return ["bookmark", "variable"].indexOf(data.actions.action5.type) !== -1;
             }
           },
           actionValue: {
-            ref: "onclick.action5.value",
+            ref: "actions.action5.value",
             label: "Selection or Variable Value",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onclick.action5.type) !== -1;
+              return ["selection", "variable"].indexOf(data.actions.action5.type) !== -1;
             }
           }
         }
@@ -439,40 +512,51 @@ exports.default = function (qlik) {
             type: "string",
             component: "dropdown",
             label: "Action Type",
-            ref: "onclick.action6.type",
+            ref: "actions.action6.type",
             defaultValue: "none",
             options: actionTypeDropdown
           },
+          actionevent: {
+            type: "string",
+            component: "dropdown",
+            label: "Action Execution",
+            ref: "actions.action6.event",
+            defaultValue: "open",
+            options: actionEventDropdown,
+            show: function show(data) {
+              return ["none"].indexOf(data.actions.action6.event) === -1;
+            }
+          },
           actionName: {
-            ref: "onclick.action6.name",
+            ref: "actions.action6.name",
             label: "Field Name",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onclick.action6.type) !== -1;
+              return ["clear", "selection"].indexOf(data.actions.action6.type) !== -1;
             }
           },
           actionDrop: {
             type: "string",
             component: "dropdown",
             label: function label(data) {
-              return data.onclick.action6.type === "bookmark" ? "Bookmark Name" : "Variable Name";
+              return data.actions.action6.type === "bookmark" ? "Bookmark Name" : "Variable Name";
             },
-            ref: "onclick.action6.drop",
+            ref: "actions.action6.drop",
             options: function options(data) {
-              return data.onclick.action6.type === "bookmark" ? bookmarkList : variableList;
+              return data.actions.action6.type === "bookmark" ? bookmarkList : variableList;
             },
             show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onclick.action6.type) !== -1;
+              return ["bookmark", "variable"].indexOf(data.actions.action6.type) !== -1;
             }
           },
           actionValue: {
-            ref: "onclick.action6.value",
+            ref: "actions.action6.value",
             label: "Selection or Variable Value",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onclick.action6.type) !== -1;
+              return ["selection", "variable"].indexOf(data.actions.action6.type) !== -1;
             }
           }
         }
@@ -485,40 +569,51 @@ exports.default = function (qlik) {
             type: "string",
             component: "dropdown",
             label: "Action Type",
-            ref: "onclick.action7.type",
+            ref: "actions.action7.type",
             defaultValue: "none",
             options: actionTypeDropdown
           },
+          actionevent: {
+            type: "string",
+            component: "dropdown",
+            label: "Action Execution",
+            ref: "actions.action7.event",
+            defaultValue: "open",
+            options: actionEventDropdown,
+            show: function show(data) {
+              return ["none"].indexOf(data.actions.action7.event) === -1;
+            }
+          },
           actionName: {
-            ref: "onclick.action7.name",
+            ref: "actions.action7.name",
             label: "Field Name",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onclick.action7.type) !== -1;
+              return ["clear", "selection"].indexOf(data.actions.action7.type) !== -1;
             }
           },
           actionDrop: {
             type: "string",
             component: "dropdown",
             label: function label(data) {
-              return data.onclick.action7.type === "bookmark" ? "Bookmark Name" : "Variable Name";
+              return data.actions.action7.type === "bookmark" ? "Bookmark Name" : "Variable Name";
             },
-            ref: "onclick.action7.drop",
+            ref: "actions.action7.drop",
             options: function options(data) {
-              return data.onclick.action7.type === "bookmark" ? bookmarkList : variableList;
+              return data.actions.action7.type === "bookmark" ? bookmarkList : variableList;
             },
             show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onclick.action7.type) !== -1;
+              return ["bookmark", "variable"].indexOf(data.actions.action7.type) !== -1;
             }
           },
           actionValue: {
-            ref: "onclick.action7.value",
+            ref: "actions.action7.value",
             label: "Selection or Variable Value",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onclick.action7.type) !== -1;
+              return ["selection", "variable"].indexOf(data.actions.action7.type) !== -1;
             }
           }
         }
@@ -531,40 +626,51 @@ exports.default = function (qlik) {
             type: "string",
             component: "dropdown",
             label: "Action Type",
-            ref: "onclick.action8.type",
+            ref: "actions.action8.type",
             defaultValue: "none",
             options: actionTypeDropdown
           },
+          actionevent: {
+            type: "string",
+            component: "dropdown",
+            label: "Action Execution",
+            ref: "actions.action8.event",
+            defaultValue: "open",
+            options: actionEventDropdown,
+            show: function show(data) {
+              return ["none"].indexOf(data.actions.action8.event) === -1;
+            }
+          },
           actionName: {
-            ref: "onclick.action8.name",
+            ref: "actions.action8.name",
             label: "Field Name",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onclick.action8.type) !== -1;
+              return ["clear", "selection"].indexOf(data.actions.action8.type) !== -1;
             }
           },
           actionDrop: {
             type: "string",
             component: "dropdown",
             label: function label(data) {
-              return data.onclick.action8.type === "bookmark" ? "Bookmark Name" : "Variable Name";
+              return data.actions.action8.type === "bookmark" ? "Bookmark Name" : "Variable Name";
             },
-            ref: "onclick.action8.drop",
+            ref: "actions.action8.drop",
             options: function options(data) {
-              return data.onclick.action8.type === "bookmark" ? bookmarkList : variableList;
+              return data.actions.action8.type === "bookmark" ? bookmarkList : variableList;
             },
             show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onclick.action8.type) !== -1;
+              return ["bookmark", "variable"].indexOf(data.actions.action8.type) !== -1;
             }
           },
           actionValue: {
-            ref: "onclick.action8.value",
+            ref: "actions.action8.value",
             label: "Selection or Variable Value",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onclick.action8.type) !== -1;
+              return ["selection", "variable"].indexOf(data.actions.action8.type) !== -1;
             }
           }
         }
@@ -577,461 +683,51 @@ exports.default = function (qlik) {
             type: "string",
             component: "dropdown",
             label: "Action Type",
-            ref: "onclick.action9.type",
+            ref: "actions.action9.type",
             defaultValue: "none",
             options: actionTypeDropdown
           },
+          actionevent: {
+            type: "string",
+            component: "dropdown",
+            label: "Action Execution",
+            ref: "actions.action9.event",
+            defaultValue: "open",
+            options: actionEventDropdown,
+            show: function show(data) {
+              return ["none"].indexOf(data.actions.action9.event) === -1;
+            }
+          },
           actionName: {
-            ref: "onclick.action9.name",
+            ref: "actions.action9.name",
             label: "Field Name",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onclick.action9.type) !== -1;
+              return ["clear", "selection"].indexOf(data.actions.action9.type) !== -1;
             }
           },
           actionDrop: {
             type: "string",
             component: "dropdown",
             label: function label(data) {
-              return data.onclick.action9.type === "bookmark" ? "Bookmark Name" : "Variable Name";
+              return data.actions.action9.type === "bookmark" ? "Bookmark Name" : "Variable Name";
             },
-            ref: "onclick.action9.drop",
+            ref: "actions.action9.drop",
             options: function options(data) {
-              return data.onclick.action9.type === "bookmark" ? bookmarkList : variableList;
+              return data.actions.action9.type === "bookmark" ? bookmarkList : variableList;
             },
             show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onclick.action9.type) !== -1;
+              return ["bookmark", "variable"].indexOf(data.actions.action9.type) !== -1;
             }
           },
           actionValue: {
-            ref: "onclick.action9.value",
+            ref: "actions.action9.value",
             label: "Selection or Variable Value",
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onclick.action9.type) !== -1;
-            }
-          }
-        }
-      }
-    }
-  };
-
-  var onOpen = {
-    label: "On Open Actions",
-    component: "expandable-items",
-    items: {
-      action1: {
-        type: "items",
-        label: "Action 1",
-        items: {
-          actiontype: {
-            type: "string",
-            component: "dropdown",
-            label: "Action Type",
-            ref: "onopen.action1.type",
-            defaultValue: "none",
-            options: actionTypeDropdown
-          },
-          actionName: {
-            ref: "onopen.action1.name",
-            label: "Field Name",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onopen.action1.type) !== -1;
-            }
-          },
-          actionDrop: {
-            type: "string",
-            component: "dropdown",
-            label: function label(data) {
-              return data.onopen.action1.type === "bookmark" ? "Bookmark Name" : "Variable Name";
-            },
-            ref: "onopen.action1.drop",
-            options: function options(data) {
-              return data.onopen.action1.type === "bookmark" ? bookmarkList : variableList;
-            },
-            show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onopen.action1.type) !== -1;
-            }
-          },
-          actionValue: {
-            ref: "onopen.action1.value",
-            label: "Selection or Variable Value",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onopen.action1.type) !== -1;
-            }
-          }
-        }
-      },
-      action2: {
-        type: "items",
-        label: "Action 2",
-        items: {
-          actiontype: {
-            type: "string",
-            component: "dropdown",
-            label: "Action Type",
-            ref: "onopen.action2.type",
-            defaultValue: "none",
-            options: actionTypeDropdown
-          },
-          actionName: {
-            ref: "onopen.action2.name",
-            label: "Field Name",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onopen.action2.type) !== -1;
-            }
-          },
-          actionDrop: {
-            type: "string",
-            component: "dropdown",
-            label: function label(data) {
-              return data.onopen.action2.type === "bookmark" ? "Bookmark Name" : "Variable Name";
-            },
-            ref: "onopen.action2.drop",
-            options: function options(data) {
-              return data.onopen.action2.type === "bookmark" ? bookmarkList : variableList;
-            },
-            show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onopen.action2.type) !== -1;
-            }
-          },
-          actionValue: {
-            ref: "onopen.action2.value",
-            label: "Selection or Variable Value",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onopen.action2.type) !== -1;
-            }
-          }
-        }
-      },
-      action3: {
-        type: "items",
-        label: "Action 3",
-        items: {
-          actiontype: {
-            type: "string",
-            component: "dropdown",
-            label: "Action Type",
-            ref: "onopen.action3.type",
-            defaultValue: "none",
-            options: actionTypeDropdown
-          },
-          actionName: {
-            ref: "onopen.action3.name",
-            label: "Field Name",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onopen.action3.type) !== -1;
-            }
-          },
-          actionDrop: {
-            type: "string",
-            component: "dropdown",
-            label: function label(data) {
-              return data.onopen.action3.type === "bookmark" ? "Bookmark Name" : "Variable Name";
-            },
-            ref: "onopen.action3.drop",
-            options: function options(data) {
-              return data.onopen.action3.type === "bookmark" ? bookmarkList : variableList;
-            },
-            show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onopen.action3.type) !== -1;
-            }
-          },
-          actionValue: {
-            ref: "onopen.action3.value",
-            label: "Selection or Variable Value",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onopen.action3.type) !== -1;
-            }
-          }
-        }
-      },
-      action4: {
-        type: "items",
-        label: "Action 4",
-        items: {
-          actiontype: {
-            type: "string",
-            component: "dropdown",
-            label: "Action Type",
-            ref: "onopen.action4.type",
-            defaultValue: "none",
-            options: actionTypeDropdown
-          },
-          actionName: {
-            ref: "onopen.action4.name",
-            label: "Field Name",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onopen.action4.type) !== -1;
-            }
-          },
-          actionDrop: {
-            type: "string",
-            component: "dropdown",
-            label: function label(data) {
-              return data.onopen.action4.type === "bookmark" ? "Bookmark Name" : "Variable Name";
-            },
-            ref: "onopen.action4.drop",
-            options: function options(data) {
-              return data.onopen.action4.type === "bookmark" ? bookmarkList : variableList;
-            },
-            show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onopen.action4.type) !== -1;
-            }
-          },
-          actionValue: {
-            ref: "onopen.action4.value",
-            label: "Selection or Variable Value",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onopen.action4.type) !== -1;
-            }
-          }
-        }
-      },
-      action5: {
-        type: "items",
-        label: "Action 5",
-        items: {
-          actiontype: {
-            type: "string",
-            component: "dropdown",
-            label: "Action Type",
-            ref: "onopen.action5.type",
-            defaultValue: "none",
-            options: actionTypeDropdown
-          },
-          actionName: {
-            ref: "onopen.action5.name",
-            label: "Field Name",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onopen.action5.type) !== -1;
-            }
-          },
-          actionDrop: {
-            type: "string",
-            component: "dropdown",
-            label: function label(data) {
-              return data.onopen.action5.type === "bookmark" ? "Bookmark Name" : "Variable Name";
-            },
-            ref: "onopen.action5.drop",
-            options: function options(data) {
-              return data.onopen.action5.type === "bookmark" ? bookmarkList : variableList;
-            },
-            show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onopen.action5.type) !== -1;
-            }
-          },
-          actionValue: {
-            ref: "onopen.action5.value",
-            label: "Selection or Variable Value",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onopen.action5.type) !== -1;
-            }
-          }
-        }
-      },
-      action6: {
-        type: "items",
-        label: "Action 6",
-        items: {
-          actiontype: {
-            type: "string",
-            component: "dropdown",
-            label: "Action Type",
-            ref: "onopen.action6.type",
-            defaultValue: "none",
-            options: actionTypeDropdown
-          },
-          actionName: {
-            ref: "onopen.action6.name",
-            label: "Field Name",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onopen.action6.type) !== -1;
-            }
-          },
-          actionDrop: {
-            type: "string",
-            component: "dropdown",
-            label: function label(data) {
-              return data.onopen.action6.type === "bookmark" ? "Bookmark Name" : "Variable Name";
-            },
-            ref: "onopen.action6.drop",
-            options: function options(data) {
-              return data.onopen.action6.type === "bookmark" ? bookmarkList : variableList;
-            },
-            show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onopen.action6.type) !== -1;
-            }
-          },
-          actionValue: {
-            ref: "onopen.action6.value",
-            label: "Selection or Variable Value",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onopen.action6.type) !== -1;
-            }
-          }
-        }
-      },
-      action7: {
-        type: "items",
-        label: "Action 7",
-        items: {
-          actiontype: {
-            type: "string",
-            component: "dropdown",
-            label: "Action Type",
-            ref: "onopen.action7.type",
-            defaultValue: "none",
-            options: actionTypeDropdown
-          },
-          actionName: {
-            ref: "onopen.action7.name",
-            label: "Field Name",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onopen.action7.type) !== -1;
-            }
-          },
-          actionDrop: {
-            type: "string",
-            component: "dropdown",
-            label: function label(data) {
-              return data.onopen.action7.type === "bookmark" ? "Bookmark Name" : "Variable Name";
-            },
-            ref: "onopen.action7.drop",
-            options: function options(data) {
-              return data.onopen.action7.type === "bookmark" ? bookmarkList : variableList;
-            },
-            show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onopen.action7.type) !== -1;
-            }
-          },
-          actionValue: {
-            ref: "onopen.action7.value",
-            label: "Selection or Variable Value",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onopen.action7.type) !== -1;
-            }
-          }
-        }
-      },
-      action8: {
-        type: "items",
-        label: "Action 8",
-        items: {
-          actiontype: {
-            type: "string",
-            component: "dropdown",
-            label: "Action Type",
-            ref: "onopen.action8.type",
-            defaultValue: "none",
-            options: actionTypeDropdown
-          },
-          actionName: {
-            ref: "onopen.action8.name",
-            label: "Field Name",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onopen.action8.type) !== -1;
-            }
-          },
-          actionDrop: {
-            type: "string",
-            component: "dropdown",
-            label: function label(data) {
-              return data.onopen.action8.type === "bookmark" ? "Bookmark Name" : "Variable Name";
-            },
-            ref: "onopen.action8.drop",
-            options: function options(data) {
-              return data.onopen.action8.type === "bookmark" ? bookmarkList : variableList;
-            },
-            show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onopen.action8.type) !== -1;
-            }
-          },
-          actionValue: {
-            ref: "onopen.action8.value",
-            label: "Selection or Variable Value",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onopen.action8.type) !== -1;
-            }
-          }
-        }
-      },
-      action9: {
-        type: "items",
-        label: "Action 9",
-        items: {
-          actiontype: {
-            type: "string",
-            component: "dropdown",
-            label: "Action Type",
-            ref: "onopen.action9.type",
-            defaultValue: "none",
-            options: actionTypeDropdown
-          },
-          actionName: {
-            ref: "onopen.action9.name",
-            label: "Field Name",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["clear", "selection"].indexOf(data.onopen.action9.type) !== -1;
-            }
-          },
-          actionDrop: {
-            type: "string",
-            component: "dropdown",
-            label: function label(data) {
-              return data.onopen.action9.type === "bookmark" ? "Bookmark Name" : "Variable Name";
-            },
-            ref: "onopen.action9.drop",
-            options: function options(data) {
-              return data.onopen.action9.type === "bookmark" ? bookmarkList : variableList;
-            },
-            show: function show(data) {
-              return ["bookmark", "variable"].indexOf(data.onopen.action9.type) !== -1;
-            }
-          },
-          actionValue: {
-            ref: "onopen.action9.value",
-            label: "Selection or Variable Value",
-            type: "string",
-            expression: "optional",
-            show: function show(data) {
-              return ["selection", "variable"].indexOf(data.onopen.action9.type) !== -1;
+              return ["selection", "variable"].indexOf(data.actions.action9.type) !== -1;
             }
           }
         }
@@ -1043,10 +739,10 @@ exports.default = function (qlik) {
     type: "items",
     component: "accordion",
     items: {
-      onClick: onClick,
-      onOpen: onOpen
+      actions: actions
     }
   };
+
   return ret;
 };
 
@@ -1081,18 +777,21 @@ exports.default = function (qlik) {
         case "variable":
           app.variable.setStringValue(action.drop, action.value);
           break;
+        case "clearall":
+          app.clearAll();
+          break;
         default:
           break;
       }
     };
 
     //get all the "on open" actions
-    var OpenActions = Object.values(layout.onopen).filter(function (action) {
-      return action.type !== "none";
+    var OpenActions = Object.values(layout.actions).filter(function (action) {
+      return action.type !== "none" && ['open', 'both'].indexOf(action.event) >= 0;
     });
     //get all the "on click" actions
-    var ClickActions = Object.values(layout.onclick).filter(function (action) {
-      return action.type !== "none";
+    var ClickActions = Object.values(layout.actions).filter(function (action) {
+      return action.type !== "none" && ['click', 'both'].indexOf(action.event) >= 0;
     });
 
     //function to do the open actions on button click
@@ -1147,10 +846,23 @@ exports.default = function ($element, layout) {
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function ($element) {};
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(9);
+var content = __webpack_require__(10);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -1158,7 +870,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(11)(content, options);
+var update = __webpack_require__(12)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -1175,10 +887,10 @@ if(false) {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(11)(false);
 // imports
 
 
@@ -1189,7 +901,7 @@ exports.push([module.i, ".qv-object-apply-selections div.button {\n  padding: 5p
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 /*
@@ -1271,7 +983,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1327,7 +1039,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(12);
+var	fixUrls = __webpack_require__(13);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1643,7 +1355,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 
@@ -1736,19 +1448,6 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports.default = function ($element) {};
 
 /***/ })
 /******/ ]);
