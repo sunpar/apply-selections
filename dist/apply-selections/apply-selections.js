@@ -739,6 +739,9 @@ exports.default = function (qlik) {
     type: "items",
     component: "accordion",
     items: {
+      appearance: {
+        uses: "settings"
+      },
       actions: actions
     }
   };
