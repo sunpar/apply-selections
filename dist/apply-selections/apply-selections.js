@@ -406,7 +406,7 @@ exports.default = function (qlik) {
             type: "string",
             component: "dropdown",
             label: "Action Execution",
-            ref: "actions.action1=4.event",
+            ref: "actions.action4.event",
             defaultValue: "open",
             options: actionEventDropdown,
             show: function show(data) {

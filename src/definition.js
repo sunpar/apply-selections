@@ -258,7 +258,7 @@ export default qlik => {
             type: "string",
             component: "dropdown",
             label: "Action Execution",
-            ref: "actions.action1=4.event",
+            ref: "actions.action4.event",
             defaultValue: "open",
             options: actionEventDropdown,
             show: data => ["none"].indexOf(data.actions.action4.event) === -1
