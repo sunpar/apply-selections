@@ -142,7 +142,7 @@ exports.default = {};
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"button\"><button class=\"apply\" ng-click=\"doClickActions()\">Apply</button></div>\n";
+module.exports = "<div class=\"button\" ng-click=\"doClickActions()\">{{buttonName}}</div>";
 
 /***/ }),
 /* 4 */
@@ -740,7 +740,15 @@ exports.default = function (qlik) {
     component: "accordion",
     items: {
       appearance: {
-        uses: "settings"
+        uses: "settings",
+        items: {
+          buttonBox: {
+            ref: "buttonName",
+            label: "Button Name",
+            type: "string",
+            defaultValue: "Apply"
+          }
+        }
       },
       actions: actions
     }
@@ -772,7 +780,7 @@ exports.default = function (qlik) {
           app.bookmark.apply(action.drop);
           break;
         case "selection":
-          app.field(action.name).toggleSelect(action.value);
+          app.field(action.name).selectValues([{ qText: action.value }], false, true);
           break;
         case "clear":
           app.field(action.name).clear();
@@ -788,6 +796,8 @@ exports.default = function (qlik) {
       }
     };
 
+    console.log(layout);
+
     //get all the "on open" actions
     var OpenActions = Object.values(layout.actions).filter(function (action) {
       return action.type !== "none" && ['open', 'both'].indexOf(action.event) >= 0;
@@ -796,7 +806,7 @@ exports.default = function (qlik) {
     var ClickActions = Object.values(layout.actions).filter(function (action) {
       return action.type !== "none" && ['click', 'both'].indexOf(action.event) >= 0;
     });
-
+    console.log(OpenActions);
     //function to do the open actions on button click
     $scope.doOpenActions = function () {
       OpenActions.forEach(function (action) {
@@ -810,6 +820,8 @@ exports.default = function (qlik) {
         doAction(action);
       });
     };
+
+    $scope.buttonName = layout.buttonName === "" ? "Apply" : layout.buttonName;
 
     //if there are on open actions, perform said actions once
     $scope.doOpenActions();
@@ -898,7 +910,7 @@ exports = module.exports = __webpack_require__(11)(false);
 
 
 // module
-exports.push([module.i, ".qv-object-apply-selections div.button {\n  padding: 5px; }\n\n.qv-object-apply-selections button {\n  width: 100px;\n  height: 25px; }\n", ""]);
+exports.push([module.i, ".qv-object-apply-selections div.button {\n  padding: 6px;\n  font-size: 14px;\n  text-align: center;\n  white-space: nowrap;\n  vertical-align: middle;\n  cursor: pointer;\n  border: 1px solid #adadad;\n  width: calc(100% - 16px);\n  border-radius: 0px;\n  font-family: \"Roboto\", sans-serif;\n  text-transform: uppercase; }\n\n.qv-object-apply-selections div.button:hover {\n  font-weight: 500;\n  color: white;\n  background-color: #343a40; }\n", ""]);
 
 // exports
 

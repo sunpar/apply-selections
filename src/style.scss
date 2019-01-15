@@ -1,10 +1,20 @@
 .qv-object-apply-selections {
   div.button {
-    padding: 5px;
+    padding: 6px;
+    font-size: 14px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #adadad;
+    width: calc(100% - 16px);
+    border-radius: 0px;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
   }
-
-  button {
-    width: 100px;
-    height: 25px;
+  div.button:hover {
+    font-weight: 500;
+    color: white;
+    background-color: #343a40;
   }
 }

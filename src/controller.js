@@ -2,7 +2,7 @@ export default qlik => {
   return [
     "$scope",
     "$element",
-    function($scope, $element) {
+    function ($scope, $element) {
       const app = qlik.currApp();
       const layout = $scope.layout;
 
@@ -13,7 +13,7 @@ export default qlik => {
             app.bookmark.apply(action.drop);
             break;
           case "selection":
-            app.field(action.name).toggleSelect(action.value);
+            app.field(action.name).selectValues([{ qText: action.value }], false, true);
             break;
           case "clear":
             app.field(action.name).clear();
@@ -29,16 +29,18 @@ export default qlik => {
         }
       };
 
+      console.log(layout);
+
       //get all the "on open" actions
       const OpenActions = Object.values(layout.actions).filter(
-        action => action.type !== "none" && ['open','both'].indexOf(action.event) >= 0
+        action => action.type !== "none" && ['open', 'both'].indexOf(action.event) >= 0
       );
       //get all the "on click" actions
       const ClickActions = Object.values(layout.actions).filter(
-        action => action.type !== "none" && ['click','both'].indexOf(action.event) >= 0
+        action => action.type !== "none" && ['click', 'both'].indexOf(action.event) >= 0
       );
-      
-			//function to do the open actions on button click
+        console.log(OpenActions)
+      //function to do the open actions on button click
       $scope.doOpenActions = () => {
         OpenActions.forEach(action => {
           doAction(action);
@@ -50,7 +52,9 @@ export default qlik => {
         ClickActions.forEach(action => {
           doAction(action);
         });
-			};
+      };
+
+      $scope.buttonName = layout.buttonName === "" ? "Apply" : layout.buttonName;
 
       //if there are on open actions, perform said actions once
       $scope.doOpenActions();

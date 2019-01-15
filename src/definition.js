@@ -588,7 +588,15 @@ export default qlik => {
     component: "accordion",
     items: {
       appearance: {
-        uses: "settings"
+        uses: "settings",
+        items: {
+          buttonBox: {
+            ref: "buttonName",
+            label: "Button Name",
+            type: "string",
+            defaultValue: "Apply",
+          }
+        }
       },
       actions: actions
     }
