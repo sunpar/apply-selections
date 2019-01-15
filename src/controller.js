@@ -29,8 +29,6 @@ export default qlik => {
         }
       };
 
-      console.log(layout);
-
       //get all the "on open" actions
       const OpenActions = Object.values(layout.actions).filter(
         action => action.type !== "none" && ['open', 'both'].indexOf(action.event) >= 0
@@ -39,7 +37,7 @@ export default qlik => {
       const ClickActions = Object.values(layout.actions).filter(
         action => action.type !== "none" && ['click', 'both'].indexOf(action.event) >= 0
       );
-        console.log(OpenActions)
+
       //function to do the open actions on button click
       $scope.doOpenActions = () => {
         OpenActions.forEach(action => {

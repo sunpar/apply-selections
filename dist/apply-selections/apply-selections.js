@@ -796,8 +796,6 @@ exports.default = function (qlik) {
       }
     };
 
-    console.log(layout);
-
     //get all the "on open" actions
     var OpenActions = Object.values(layout.actions).filter(function (action) {
       return action.type !== "none" && ['open', 'both'].indexOf(action.event) >= 0;
@@ -806,7 +804,7 @@ exports.default = function (qlik) {
     var ClickActions = Object.values(layout.actions).filter(function (action) {
       return action.type !== "none" && ['click', 'both'].indexOf(action.event) >= 0;
     });
-    console.log(OpenActions);
+
     //function to do the open actions on button click
     $scope.doOpenActions = function () {
       OpenActions.forEach(function (action) {
