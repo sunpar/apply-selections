@@ -13,7 +13,7 @@ export default qlik => {
             app.bookmark.apply(action.drop);
             break;
           case "selection":
-            app.field(action.name).selectValues([{ qText: action.value }], false, true);
+            app.field(action.name).selectMatch(action.value, false, true);
             break;
           case "clear":
             app.field(action.name).clear();

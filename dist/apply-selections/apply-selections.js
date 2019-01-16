@@ -746,7 +746,7 @@ exports.default = function (qlik) {
             ref: "buttonName",
             label: "Button Name",
             type: "string",
-            defaultValue: "Apply"
+            expression: "optional"
           }
         }
       },
@@ -780,7 +780,8 @@ exports.default = function (qlik) {
           app.bookmark.apply(action.drop);
           break;
         case "selection":
-          app.field(action.name).selectValues([{ qText: action.value }], false, true);
+          console.log(action);
+          app.field(action.name).selectMatch(action.value, false, true);
           break;
         case "clear":
           app.field(action.name).clear();

@@ -594,7 +594,7 @@ export default qlik => {
             ref: "buttonName",
             label: "Button Name",
             type: "string",
-            defaultValue: "Apply",
+            expression: "optional",
           }
         }
       },
