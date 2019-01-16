@@ -780,7 +780,6 @@ exports.default = function (qlik) {
           app.bookmark.apply(action.drop);
           break;
         case "selection":
-          console.log(action);
           app.field(action.name).selectMatch(action.value, false, true);
           break;
         case "clear":
