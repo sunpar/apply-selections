@@ -172,7 +172,10 @@ var actionTypeDropdown = [{
   label: "[No Action]"
 }, {
   value: "selection",
-  label: "Apply Selection"
+  label: "Apply Selection in Field"
+}, {
+  value: "multiple",
+  label: "Apply Mulitple Selections in Field"
 }, {
   value: "bookmark",
   label: "Apply Bookmark"
@@ -248,7 +251,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.actions.action1.type) !== -1;
+              return ["clear", "selection", "multiple"].indexOf(data.actions.action1.type) !== -1;
             }
           },
           actionDrop: {
@@ -271,7 +274,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.actions.action1.type) !== -1;
+              return ["selection", "multiple", "variable"].indexOf(data.actions.action1.type) !== -1;
             }
           }
         }
@@ -305,7 +308,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.actions.action2.type) !== -1;
+              return ["clear", "selection", "multiple"].indexOf(data.actions.action2.type) !== -1;
             }
           },
           actionDrop: {
@@ -328,7 +331,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.actions.action2.type) !== -1;
+              return ["selection", "multiple", "variable"].indexOf(data.actions.action2.type) !== -1;
             }
           }
         }
@@ -362,7 +365,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.actions.action3.type) !== -1;
+              return ["clear", "selection", "multiple"].indexOf(data.actions.action3.type) !== -1;
             }
           },
           actionDrop: {
@@ -385,7 +388,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.actions.action3.type) !== -1;
+              return ["selection", "multiple", "variable"].indexOf(data.actions.action3.type) !== -1;
             }
           }
         }
@@ -419,7 +422,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.actions.action4.type) !== -1;
+              return ["clear", "selection", "multiple"].indexOf(data.actions.action4.type) !== -1;
             }
           },
           actionDrop: {
@@ -442,7 +445,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.actions.action4.type) !== -1;
+              return ["selection", "multiple", "variable"].indexOf(data.actions.action4.type) !== -1;
             }
           }
         }
@@ -476,7 +479,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.actions.action5.type) !== -1;
+              return ["clear", "selection", "multiple"].indexOf(data.actions.action5.type) !== -1;
             }
           },
           actionDrop: {
@@ -499,7 +502,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.actions.action5.type) !== -1;
+              return ["selection", "multiple", "variable"].indexOf(data.actions.action5.type) !== -1;
             }
           }
         }
@@ -533,7 +536,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.actions.action6.type) !== -1;
+              return ["clear", "selection", "multiple"].indexOf(data.actions.action6.type) !== -1;
             }
           },
           actionDrop: {
@@ -556,7 +559,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.actions.action6.type) !== -1;
+              return ["selection", "multiple", "variable"].indexOf(data.actions.action6.type) !== -1;
             }
           }
         }
@@ -590,7 +593,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.actions.action7.type) !== -1;
+              return ["clear", "selection", "multiple"].indexOf(data.actions.action7.type) !== -1;
             }
           },
           actionDrop: {
@@ -613,7 +616,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.actions.action7.type) !== -1;
+              return ["selection", "multiple", "variable"].indexOf(data.actions.action7.type) !== -1;
             }
           }
         }
@@ -647,7 +650,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.actions.action8.type) !== -1;
+              return ["clear", "selection", "multiple"].indexOf(data.actions.action8.type) !== -1;
             }
           },
           actionDrop: {
@@ -670,7 +673,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.actions.action8.type) !== -1;
+              return ["selection", "multiple", "variable"].indexOf(data.actions.action8.type) !== -1;
             }
           }
         }
@@ -704,7 +707,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["clear", "selection"].indexOf(data.actions.action9.type) !== -1;
+              return ["clear", "selection", "multiple"].indexOf(data.actions.action9.type) !== -1;
             }
           },
           actionDrop: {
@@ -727,7 +730,7 @@ exports.default = function (qlik) {
             type: "string",
             expression: "optional",
             show: function show(data) {
-              return ["selection", "variable"].indexOf(data.actions.action9.type) !== -1;
+              return ["selection", "multiple", "variable"].indexOf(data.actions.action9.type) !== -1;
             }
           }
         }
@@ -773,6 +776,17 @@ exports.default = function (qlik) {
     var app = qlik.currApp();
     var layout = $scope.layout;
 
+    // Helper function to split numbers.
+    function splitToStringNum(str, sep) {
+      var a = str.split(sep);
+      for (var i = 0; i < a.length; i++) {
+        if (!isNaN(a[i])) {
+          a[i] = Number(a[i]);
+        }
+      }
+      return a;
+    }
+
     //function to take an action and act on it
     var doAction = function doAction(action) {
       switch (action.type) {
@@ -781,6 +795,10 @@ exports.default = function (qlik) {
           break;
         case "selection":
           app.field(action.name).selectMatch(action.value, false, true);
+          break;
+        case "multiple":
+          var vals = splitToStringNum(action.value, ';');
+          app.field(action.name).selectValues(vals, false);
           break;
         case "clear":
           app.field(action.name).clear();
@@ -792,6 +810,7 @@ exports.default = function (qlik) {
           app.clearAll();
           break;
         default:
+          console.error("Action not identified by Apply Selections extension: ", action);
           break;
       }
     };

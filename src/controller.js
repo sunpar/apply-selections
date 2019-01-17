@@ -6,6 +6,17 @@ export default qlik => {
       const app = qlik.currApp();
       const layout = $scope.layout;
 
+      // Helper function to split numbers.
+      function splitToStringNum(str, sep) {
+        const a = str.split(sep);
+        for (let i = 0; i < a.length; i++) {
+          if (!isNaN(a[i])) {
+            a[i] = Number(a[i]);
+          }
+        }
+        return a;
+      }
+
       //function to take an action and act on it
       const doAction = action => {
         switch (action.type) {
@@ -14,6 +25,10 @@ export default qlik => {
             break;
           case "selection":
             app.field(action.name).selectMatch(action.value, false, true);
+            break;
+          case "multiple":
+            const vals = splitToStringNum(action.value, ';');
+            app.field(action.name).selectValues(vals, false);
             break;
           case "clear":
             app.field(action.name).clear();
@@ -25,9 +40,12 @@ export default qlik => {
             app.clearAll();
             break;
           default:
+            console.error("Action not identified by Apply Selections extension: ", action);
             break;
         }
       };
+
+
 
       //get all the "on open" actions
       const OpenActions = Object.values(layout.actions).filter(

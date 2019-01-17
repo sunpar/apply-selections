@@ -22,7 +22,11 @@ const actionTypeDropdown = [
   },
   {
     value: "selection",
-    label: "Apply Selection"
+    label: "Apply Selection in Field"
+  },
+  {
+    value: "multiple",
+    label: "Apply Mulitple Selections in Field"
   },
   {
     value: "bookmark",
@@ -51,7 +55,7 @@ export default qlik => {
   // the bookmarkList should be a list of all the available bookmarks in the app
   let bookmarkList = actionTypeDropdown;
   app.getList("BookmarkList", list => {
-    variableList = bookmarkList = list.qBookmarkList.qItems.map(function(item) {
+    variableList = bookmarkList = list.qBookmarkList.qItems.map(function (item) {
       return {
         value: item.qInfo.qId,
         label: item.qData.title
@@ -62,7 +66,7 @@ export default qlik => {
   // the variableList should be a list of all the avaiable variables in the app
   let variableList = actionTypeDropdown;
   app.getList("VariableList", list => {
-    variableList = list.qVariableList.qItems.map(function(item) {
+    variableList = list.qVariableList.qItems.map(function (item) {
       return {
         value: item.qName,
         label: item.qName
@@ -101,7 +105,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["clear","selection"].indexOf(data.actions.action1.type) !== -1
+              ["clear", "selection", "multiple"].indexOf(data.actions.action1.type) !== -1
           },
           actionDrop: {
             type: "string",
@@ -124,7 +128,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["selection", "variable"].indexOf(
+              ["selection", "multiple", "variable"].indexOf(
                 data.actions.action1.type
               ) !== -1
           }
@@ -157,7 +161,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["clear","selection"].indexOf(data.actions.action2.type) !== -1
+              ["clear", "selection", "multiple"].indexOf(data.actions.action2.type) !== -1
           },
           actionDrop: {
             type: "string",
@@ -180,7 +184,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["selection", "variable"].indexOf(
+              ["selection", "multiple", "variable"].indexOf(
                 data.actions.action2.type
               ) !== -1
           }
@@ -213,7 +217,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["clear","selection"].indexOf(data.actions.action3.type) !== -1
+              ["clear", "selection", "multiple"].indexOf(data.actions.action3.type) !== -1
           },
           actionDrop: {
             type: "string",
@@ -236,7 +240,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["selection", "variable"].indexOf(
+              ["selection", "multiple", "variable"].indexOf(
                 data.actions.action3.type
               ) !== -1
           }
@@ -269,7 +273,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["clear","selection"].indexOf(data.actions.action4.type) !== -1
+              ["clear", "selection", "multiple"].indexOf(data.actions.action4.type) !== -1
           },
           actionDrop: {
             type: "string",
@@ -292,7 +296,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["selection", "variable"].indexOf(
+              ["selection", "multiple", "variable"].indexOf(
                 data.actions.action4.type
               ) !== -1
           }
@@ -325,7 +329,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["clear","selection"].indexOf(data.actions.action5.type) !== -1
+              ["clear", "selection", "multiple"].indexOf(data.actions.action5.type) !== -1
           },
           actionDrop: {
             type: "string",
@@ -348,7 +352,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["selection", "variable"].indexOf(
+              ["selection", "multiple", "variable"].indexOf(
                 data.actions.action5.type
               ) !== -1
           }
@@ -381,7 +385,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["clear","selection"].indexOf(data.actions.action6.type) !== -1
+              ["clear", "selection", "multiple"].indexOf(data.actions.action6.type) !== -1
           },
           actionDrop: {
             type: "string",
@@ -404,7 +408,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["selection", "variable"].indexOf(
+              ["selection", "multiple", "variable"].indexOf(
                 data.actions.action6.type
               ) !== -1
           }
@@ -437,7 +441,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["clear","selection"].indexOf(data.actions.action7.type) !== -1
+              ["clear", "selection", "multiple"].indexOf(data.actions.action7.type) !== -1
           },
           actionDrop: {
             type: "string",
@@ -460,7 +464,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["selection", "variable"].indexOf(
+              ["selection", "multiple", "variable"].indexOf(
                 data.actions.action7.type
               ) !== -1
           }
@@ -493,7 +497,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["clear","selection"].indexOf(data.actions.action8.type) !== -1
+              ["clear", "selection", "multiple"].indexOf(data.actions.action8.type) !== -1
           },
           actionDrop: {
             type: "string",
@@ -516,7 +520,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["selection", "variable"].indexOf(
+              ["selection", "multiple", "variable"].indexOf(
                 data.actions.action8.type
               ) !== -1
           }
@@ -549,7 +553,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["clear","selection"].indexOf(data.actions.action9.type) !== -1
+              ["clear", "selection", "multiple"].indexOf(data.actions.action9.type) !== -1
           },
           actionDrop: {
             type: "string",
@@ -572,7 +576,7 @@ export default qlik => {
             type: "string",
             expression: "optional",
             show: data =>
-              ["selection", "variable"].indexOf(
+              ["selection", "multiple", "variable"].indexOf(
                 data.actions.action9.type
               ) !== -1
           }
@@ -581,7 +585,7 @@ export default qlik => {
     }
   };
 
-  
+
 
   const ret = {
     type: "items",
@@ -601,6 +605,6 @@ export default qlik => {
       actions: actions
     }
   };
-  
+
   return ret;
 };
