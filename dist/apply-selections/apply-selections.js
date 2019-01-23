@@ -105,9 +105,9 @@ var _resize = __webpack_require__(7);
 
 var _resize2 = _interopRequireDefault(_resize);
 
-var _mounted = __webpack_require__(8);
+var _beforeDestroy = __webpack_require__(14);
 
-var _mounted2 = _interopRequireDefault(_mounted);
+var _beforeDestroy2 = _interopRequireDefault(_beforeDestroy);
 
 __webpack_require__(9);
 
@@ -122,7 +122,7 @@ exports.default = window.define(["jquery", "qlik"], function ($, qlik) {
     controller: controller,
     paint: _paint2.default,
     resize: _resize2.default,
-    mounted: _mounted2.default
+    beforeDestroy: (0, _beforeDestroy2.default)(qlik)
   };
 });
 
@@ -775,7 +775,7 @@ exports.default = function (qlik) {
   return ["$scope", "$element", function ($scope, $element) {
     var app = qlik.currApp();
     var layout = $scope.layout;
-
+    console.log("in controller");
     // Helper function to split numbers.
     function splitToStringNum(str, sep) {
       var a = str.split(sep);
@@ -791,27 +791,21 @@ exports.default = function (qlik) {
     var doAction = function doAction(action) {
       switch (action.type) {
         case "bookmark":
-          app.bookmark.apply(action.drop);
-          break;
+          return app.bookmark.apply(action.drop);
         case "selection":
-          app.field(action.name).selectMatch(action.value, false, true);
-          break;
+          return app.field(action.name).selectMatch(action.value, false, true);
         case "multiple":
           var vals = splitToStringNum(action.value, ';');
-          app.field(action.name).selectValues(vals, false);
-          break;
+          return app.field(action.name).selectValues(vals, false);
         case "clear":
-          app.field(action.name).clear();
-          break;
+          return app.field(action.name).clear();
         case "variable":
-          app.variable.setStringValue(action.drop, action.value);
-          break;
+          return app.variable.setStringValue(action.drop, action.value);
         case "clearall":
-          app.clearAll();
-          break;
+          return app.clearAll();
         default:
           console.error("Action not identified by Apply Selections extension: ", action);
-          break;
+          return Promise.resolve();
       }
     };
 
@@ -824,24 +818,49 @@ exports.default = function (qlik) {
       return action.type !== "none" && ['click', 'both'].indexOf(action.event) >= 0;
     });
 
-    //function to do the open actions on button click
+    //function to do the open actions
     $scope.doOpenActions = function () {
+      var chain = Promise.resolve();
       OpenActions.forEach(function (action) {
-        doAction(action);
+        chain = chain.then(function () {
+          return doAction(action);
+        });
       });
+      return chain;
     };
 
-    //function to do the click actions on button click
+    //function to do the click actions 
     $scope.doClickActions = function () {
+      var chain = Promise.resolve();
       ClickActions.forEach(function (action) {
-        doAction(action);
+        chain = chain.then(function () {
+          return doAction(action);
+        });
       });
+      return chain;
     };
 
     $scope.buttonName = layout.buttonName === "" ? "Apply" : layout.buttonName;
 
-    //if there are on open actions, perform said actions once
-    $scope.doOpenActions();
+    //if the global open objs isn't there, instantiate it
+    // if (!window.openObjs) window.openObjs = [];
+
+    //if the current sheet is different from the global current sheet, then you can run onOpen actions
+    //then change the global current sheet to the current sheetID
+    var doOpen = window.currSheet !== qlik.navigation.getCurrentSheetId().sheetId;
+    if (doOpen) {
+      window.currSheet = qlik.navigation.getCurrentSheetId().sheetId;
+      $scope.doOpenActions();
+    }
+    window.currSheet = qlik.navigation.getCurrentSheetId().sheetId;
+
+    //if this is the first open of this object, add this object to the open objects and then execute onOpen actions
+    $scope.backendApi.getProperties().then(function (reply) {
+      if (window.openObjs.indexOf(reply.qInfo.qId) < 0) {
+        window.openObjs.push(reply.qInfo.qId);
+        $scope.doOpenActions();
+      }
+    });
   }];
 };
 
@@ -875,19 +894,7 @@ exports.default = function ($element, layout) {
 };
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports.default = function ($element) {};
-
-/***/ }),
+/* 8 */,
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1480,6 +1487,23 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (qlik) {
+    return function () {
+        window.currSheet = qlik.navigation.getCurrentSheetId().sheetId;
+    };
+};
 
 /***/ })
 /******/ ]);
