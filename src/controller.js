@@ -5,7 +5,7 @@ export default qlik => {
     function ($scope, $element) {
       const app = qlik.currApp();
       const layout = $scope.layout;
-      console.log("in controller");
+
       // Helper function to split numbers.
       function splitToStringNum(str, sep) {
         const a = str.split(sep);
@@ -76,19 +76,18 @@ export default qlik => {
       //if the current sheet is different from the global current sheet, then you can run onOpen actions
       //then change the global current sheet to the current sheetID
       const doOpen = window.currSheet !== qlik.navigation.getCurrentSheetId().sheetId;
-      if(doOpen) {
+      if(doOpen && OpenActions.length > 0) {
         window.currSheet = qlik.navigation.getCurrentSheetId().sheetId;
         $scope.doOpenActions();
       }
-      window.currSheet = qlik.navigation.getCurrentSheetId().sheetId;
 
       //if this is the first open of this object, add this object to the open objects and then execute onOpen actions
-      $scope.backendApi.getProperties().then(function (reply) {
-        if (window.openObjs.indexOf(reply.qInfo.qId) < 0) {
-          window.openObjs.push(reply.qInfo.qId);
-          $scope.doOpenActions();
-        }
-      });
+      // $scope.backendApi.getProperties().then(function (reply) {
+      //   if (window.openObjs.indexOf(reply.qInfo.qId) < 0) {
+      //     window.openObjs.push(reply.qInfo.qId);
+      //     $scope.doOpenActions();
+      //   }
+      // });
       
     }
   ];

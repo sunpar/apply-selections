@@ -105,7 +105,7 @@ var _resize = __webpack_require__(7);
 
 var _resize2 = _interopRequireDefault(_resize);
 
-var _beforeDestroy = __webpack_require__(14);
+var _beforeDestroy = __webpack_require__(8);
 
 var _beforeDestroy2 = _interopRequireDefault(_beforeDestroy);
 
@@ -775,7 +775,7 @@ exports.default = function (qlik) {
   return ["$scope", "$element", function ($scope, $element) {
     var app = qlik.currApp();
     var layout = $scope.layout;
-    console.log("in controller");
+
     // Helper function to split numbers.
     function splitToStringNum(str, sep) {
       var a = str.split(sep);
@@ -848,19 +848,18 @@ exports.default = function (qlik) {
     //if the current sheet is different from the global current sheet, then you can run onOpen actions
     //then change the global current sheet to the current sheetID
     var doOpen = window.currSheet !== qlik.navigation.getCurrentSheetId().sheetId;
-    if (doOpen) {
+    if (doOpen && OpenActions.length > 0) {
       window.currSheet = qlik.navigation.getCurrentSheetId().sheetId;
       $scope.doOpenActions();
     }
-    window.currSheet = qlik.navigation.getCurrentSheetId().sheetId;
 
     //if this is the first open of this object, add this object to the open objects and then execute onOpen actions
-    $scope.backendApi.getProperties().then(function (reply) {
-      if (window.openObjs.indexOf(reply.qInfo.qId) < 0) {
-        window.openObjs.push(reply.qInfo.qId);
-        $scope.doOpenActions();
-      }
-    });
+    // $scope.backendApi.getProperties().then(function (reply) {
+    //   if (window.openObjs.indexOf(reply.qInfo.qId) < 0) {
+    //     window.openObjs.push(reply.qInfo.qId);
+    //     $scope.doOpenActions();
+    //   }
+    // });
   }];
 };
 
@@ -894,7 +893,23 @@ exports.default = function ($element, layout) {
 };
 
 /***/ }),
-/* 8 */,
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (qlik) {
+    return function () {
+        window.currSheet = qlik.navigation.getCurrentSheetId().sheetId;
+    };
+};
+
+/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1487,23 +1502,6 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-exports.default = function (qlik) {
-    return function () {
-        window.currSheet = qlik.navigation.getCurrentSheetId().sheetId;
-    };
-};
 
 /***/ })
 /******/ ]);
